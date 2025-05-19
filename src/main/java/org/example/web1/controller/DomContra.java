@@ -63,9 +63,9 @@ public class DomContra {
 
     @GetMapping("/find")
     public String findByName(@RequestParam String name) {
-        Person person = baza.findByName(name);
-        if (person != null) {
-            return "found " + person.getName() + " age " + person.getAge();
+        Optional<Person> person = baza.findByName(name);
+        if (person.isPresent()) {
+            return "found " + person.get().getName() + " age " + person.get().getAge();
         }
         else {
             return "not found";
@@ -94,6 +94,12 @@ public class DomContra {
             hexString.append(hex);
         }
         return hexString.toString();
+    }
+
+    @DeleteMapping("/delete")
+    public String delete(@RequestParam Integer id) {
+        baza.deleteById(id);
+        return "user is udalёn " + id;
     }
 
     // выводишь из базы данных
